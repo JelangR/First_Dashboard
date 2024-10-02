@@ -27,8 +27,8 @@ def buat_berdasarkan_cuaca(df):
     }).reset_index()
     return berdasarkan_cuaca
 
-day_df=pd.read_csv("Dashboard\day_data.csv")
-hour_df=pd.read_csv("Dashboard\hour_data.csv")
+day_df=pd.read_csv("day_data.csv")
+hour_df=pd.read_csv("hour_data.csv")
 
 season_favorite=buat_rental_musim(day_df)
 hour_favorite=buat_rental_jam(hour_df)
