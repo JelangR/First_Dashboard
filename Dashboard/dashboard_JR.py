@@ -1,3 +1,4 @@
+#--- Import modul yang dibutuhkan
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -5,38 +6,41 @@ import streamlit as st
 from babel.numbers import format_currency
 sns.set(style='dark')
 
-def buat_rental_musim(df):
+#--- Inisiasi fungsi yang akan digunakan
+def buat_rental_musim(df): #--- Fungsi untuk membuat list berdasarkan "season"
     rental_season=df.groupby(by="season").cnt.nunique().reset_index()
     rental_season.rename(columns={
         "cnt":"customer_count"
     }, inplace=True)
     return rental_season
 
-
-def buat_rental_jam(df):
+def buat_rental_jam(df):#--- Fungsi untuk membuat list berdasarkan "hr"
     rental_jam=df.groupby(by="hr").cnt.nunique().reset_index()
     rental_jam.rename(columns={
         "cnt":"customer_count"
     }, inplace=True)
     return rental_jam
 
-def buat_berdasarkan_cuaca(df):
+def buat_berdasarkan_cuaca(df):#--- Fungsi untuk membuat list berdasarkan "wheatersit"
     berdasarkan_cuaca=df.groupby(by="weathersit").agg({
     "instant": "nunique",
     "cnt": "sum"
     }).reset_index()
     return berdasarkan_cuaca
 
+#--- Memanggil data
 day_df=pd.read_csv("day_data.csv")
 hour_df=pd.read_csv("hour_data.csv")
 
+#--- Memanggil fungsi
 season_favorite=buat_rental_musim(day_df)
 hour_favorite=buat_rental_jam(hour_df)
 weather_favorite=buat_berdasarkan_cuaca(day_df)
 
-st.header('Dashboard Bike Sharing :bicyclist::star2:')
-st.subheader("Statistic	:1234:")
+st.header('Dashboard Bike Sharing :bicyclist::star2:')#--- Membuat judul Dashboard
+st.subheader("Statistic	:1234:")#--- Membuat sub judul Dashboard
 
+#--- Membuat sidebar
 with st.sidebar:
     st.subheader("Background")
     st.write(
@@ -56,21 +60,26 @@ with st.sidebar:
         """
     )
 
-col1,col2,col3=st.columns(3)
+col1,col2,col3=st.columns(3)#--- Membuat 3 kolom
+
+#--- kolom jumlah rental
 with col1:
     total_rent=day_df['cnt'].sum()
     st.metric("Total Rental",value=total_rent)
 
+#--- jumlah rental pelanggan yang mempunyai member
 with col2:
     member_rent=day_df['registered'].sum()
     st.metric("Member Rental", value=member_rent)
 
+#--- jumlah rental pelanngan non member
 with col3:
     casual_rent=day_df['casual'].sum()
     st.metric("Non Member Rental", value=casual_rent)
 
 st.subheader("Customer's favorite season	:sunny:	:cloud:")
 
+#--- membuat bar chart berdasarkan "seeson"
 fig, ax=plt.subplots(figsize=(20,10))
 
 colors_ = ["#D3D3D3",  "#D3D3D3","#72BCD4", "#D3D3D3"]
@@ -100,6 +109,8 @@ st.write(
 )
 
 st.subheader("Customer's favorite and hate hour	:smile::triumph:")
+
+#--- membuat bar chart berdasarkan "hr"
 fig, ax=plt.subplots(figsize=(20,10))
 colors_ = ["#D3D3D3",  "#D3D3D3", "#D3D3D3","#D3D3D3",  "#D91656", "#D3D3D3",
            "#D3D3D3", "#D3D3D3", "#D3D3D3","#D3D3D3",  "#D3D3D3", "#D3D3D3",
@@ -118,10 +129,3 @@ ax.set_ylabel(None)
 ax.set_xlabel(None)
 ax.tick_params(axis='x', labelsize=12)
 st.pyplot(fig)
-
-
-
-
-
-
-
