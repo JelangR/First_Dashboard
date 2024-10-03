@@ -29,8 +29,8 @@ def buat_berdasarkan_cuaca(df):#--- Fungsi untuk membuat list berdasarkan "wheat
     return berdasarkan_cuaca
 
 #--- Memanggil data
-day_df=pd.read_csv("Dashboard\day_data.csv")
-hour_df=pd.read_csv("Dashboard\hour_data.csv")
+day_df=pd.read_csv("Dashboard/day_data.csv")
+hour_df=pd.read_csv("Dashboard/hour_data.csv")
 
 #--- Memanggil fungsi
 season_favorite=buat_rental_musim(day_df)
