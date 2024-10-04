@@ -21,13 +21,6 @@ def buat_rental_jam(df):#--- Fungsi untuk membuat list berdasarkan "hr"
     }, inplace=True)
     return rental_jam
 
-def buat_berdasarkan_cuaca(df):#--- Fungsi untuk membuat list berdasarkan "wheatersit"
-    berdasarkan_cuaca=df.groupby(by="weathersit").agg({
-    "instant": "nunique",
-    "cnt": "sum"
-    }).reset_index()
-    return berdasarkan_cuaca
-
 #--- Memanggil data
 day_df=pd.read_csv("Dashboard/day_data.csv")
 hour_df=pd.read_csv("Dashboard/hour_data.csv")
@@ -35,7 +28,6 @@ hour_df=pd.read_csv("Dashboard/hour_data.csv")
 #--- Memanggil fungsi
 season_favorite=buat_rental_musim(day_df)
 hour_favorite=buat_rental_jam(hour_df)
-weather_favorite=buat_berdasarkan_cuaca(day_df)
 
 st.header('Dashboard Bike Sharing :bicyclist::star2:')#--- Membuat judul Dashboard
 st.subheader("Statistic	:1234:")#--- Membuat sub judul Dashboard
