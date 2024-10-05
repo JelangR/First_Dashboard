@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 from babel.numbers import format_currency
+from sklearn.linear_model import LinearRegression
 sns.set(style='dark')
 
 #--- Inisiasi fungsi yang akan digunakan
@@ -121,3 +122,20 @@ ax.set_ylabel(None)
 ax.set_xlabel(None)
 ax.tick_params(axis='x', labelsize=12)
 st.pyplot(fig)
+
+st.subheader("Relationship between weather and number of bike renters")
+fig, ax=plt.subplots(figsize=(20,10))
+rent = hour_df.groupby(by="weathersit").agg({
+    "instant": "nunique",
+    "cnt": "sum"
+}).sort_values(by="cnt", ascending=False)
+
+sns.scatterplot(data=rent, x="instant", y="cnt")
+sns.regplot(data=rent, x="instant", y="cnt")
+
+Nilai = LinearRegression()
+Nilai.fit(rent[["instant"]], rent["cnt"])
+r2_score = Nilai.score(rent[["instant"]], rent["cnt"])
+st.pyplot(fig)
+
+st.write("Regression Value = 0.9952780392150941  (excellent regression model)")
