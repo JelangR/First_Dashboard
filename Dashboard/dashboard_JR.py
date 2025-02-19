@@ -106,7 +106,7 @@ st.subheader("Customer's favorite season	:sunny:	:cloud:")
 fig, ax = plt.subplots(figsize=(16, 8))
 ax.plot(
     daily_orders_df["dteday"],
-    daily_orders_df["cnt"],
+    daily_orders_df["bulan"],
     marker='o', 
     linewidth=2,
     color="#90CAF9"
