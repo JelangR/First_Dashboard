@@ -23,7 +23,16 @@ def buat_rental_jam(df):#--- Fungsi untuk membuat list berdasarkan "hr"
     }, inplace=True)
     return rental_jam
 
-
+def create_daily_orders_df(df):
+    daily_orders_df = df.resample(rule='D', on='order_date').agg({
+        "mnth": "nunique",
+        "cnt": "sum"
+    })
+    daily_orders_df = daily_orders_df.reset_index()
+    daily_orders_df.rename(columns={
+        "mnth": "bulan",
+        "cnt": "total"
+    }, inplace=True)
 #--- Memanggil data
 day_df=pd.read_csv("Dashboard/day_data.csv")
 hour_df=pd.read_csv("Dashboard/hour_data.csv")
@@ -56,7 +65,7 @@ with st.sidebar:
     )
 main_df = day_df[(day_df["dteday"] >= str(start_date)) & 
                 (day_df["dteday"] <= str(end_date))]
-
+daily_orders_df = create_daily_orders_df(main_df)
 with st.sidebar:
     st.subheader("Background")
     st.write(
@@ -93,11 +102,11 @@ with col3:
     st.metric("Non Member Rental", value=casual_rent)
 
 st.subheader("Customer's favorite season	:sunny:	:cloud:")
-#--- membuat tabel jumlah penyewa menurut tanggal
+#--- membuat tabel jumlah penyewa (perbulan) menurut tanggal
 fig, ax = plt.subplots(figsize=(16, 8))
 ax.plot(
-    main_df["dteday"],
-    day_df["cnt"],
+    daily_orders_df["dteday"],
+    daily_orders_df["cnt"],
     marker='o', 
     linewidth=2,
     color="#90CAF9"
