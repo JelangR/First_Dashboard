@@ -23,6 +23,7 @@ def buat_rental_jam(df):#--- Fungsi untuk membuat list berdasarkan "hr"
     }, inplace=True)
     return rental_jam
 
+
 #--- Memanggil data
 day_df=pd.read_csv("Dashboard/day_data.csv")
 hour_df=pd.read_csv("Dashboard/hour_data.csv")
@@ -55,6 +56,7 @@ with st.sidebar:
     )
 main_df = day_df[(day_df["dteday"] >= str(start_date)) & 
                 (day_df["dteday"] <= str(end_date))]
+daily_orders_df = create_daily_orders_df(main_df)
 with st.sidebar:
     st.subheader("Background")
     st.write(
@@ -94,19 +96,14 @@ st.subheader("Customer's favorite season	:sunny:	:cloud:")
 #--- membuat tabel jumlah penyewa menurut tanggal
 fig, ax = plt.subplots(figsize=(16, 8))
 ax.plot(
-    day_df["dteday"],
+    main_df["dteday"],
     day_df["cnt"],
-    marker='',
-    linestyle='-',  
+    marker='o', 
     linewidth=2,
     color="#90CAF9"
 )
-ax.set_title("Tren Penyewaan Sepeda Harian", fontsize=22)
-ax.set_xlabel("Tanggal", fontsize=18)
-ax.set_ylabel("Jumlah Penyewaan", fontsize=18)
-ax.tick_params(axis='y', labelsize=15)
-ax.tick_params(axis='x', labelsize=12, rotation=45)  
-ax.grid(True, linestyle="--", alpha=0.7)
+ax.tick_params(axis='y', labelsize=20)
+ax.tick_params(axis='x', labelsize=15)
  
 st.pyplot(fig)
 #--- membuat bar chart berdasarkan "seeson"
