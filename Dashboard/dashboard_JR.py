@@ -24,8 +24,8 @@ def buat_rental_jam(df):#--- Fungsi untuk membuat list berdasarkan "hr"
     return rental_jam
 
 #--- Memanggil data
-day_df=pd.read_csv("Dashboard\day_data.csv")
-hour_df=pd.read_csv("Dashboard\hour_data.csv")
+day_df=pd.read_csv("Dashboard/day_data.csv")
+hour_df=pd.read_csv("Dashboard/hour_data.csv")
 
 #--- Memanggil fungsi
 season_favorite=buat_rental_musim(day_df)
