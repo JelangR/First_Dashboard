@@ -34,7 +34,6 @@ hour_favorite=buat_rental_jam(hour_df)
 st.header('Dashboard Bike Sharing :bicyclist::star2:')#--- Membuat judul Dashboard
 st.subheader("Statistic	:1234:")#--- Membuat sub judul Dashboard
 
-#--- Membuat sidebar
 #--- Membuat Filter
 datetime_columns = ["dteday"]
 day_df.sort_values(by="dteday", inplace=True)
@@ -45,7 +44,8 @@ for column in datetime_columns:
 	
 min_date = day_df["dteday"].min()
 max_date = day_df["dteday"].max()
- 
+
+#--- Membuat sidebar 
 with st.sidebar:
     # Mengambil start_date & end_date dari date_input
     start_date, end_date = st.date_input(
@@ -91,7 +91,19 @@ with col3:
     st.metric("Non Member Rental", value=casual_rent)
 
 st.subheader("Customer's favorite season	:sunny:	:cloud:")
-
+#--- membuat tabel jumlah penyewa menurut tanggal
+fig, ax = plt.subplots(figsize=(16, 8))
+ax.plot(
+    day_df["dteday"],
+    day_df["cnt"],
+    marker='o', 
+    linewidth=2,
+    color="#90CAF9"
+)
+ax.tick_params(axis='y', labelsize=20)
+ax.tick_params(axis='x', labelsize=15)
+ 
+st.pyplot(fig)
 #--- membuat bar chart berdasarkan "seeson"
 fig, ax=plt.subplots(figsize=(20,10))
 
