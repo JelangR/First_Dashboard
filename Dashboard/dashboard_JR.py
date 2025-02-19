@@ -56,7 +56,7 @@ with st.sidebar:
     )
 main_df = day_df[(day_df["dteday"] >= str(start_date)) & 
                 (day_df["dteday"] <= str(end_date))]
-daily_orders_df = create_daily_orders_df(main_df)
+
 with st.sidebar:
     st.subheader("Background")
     st.write(
