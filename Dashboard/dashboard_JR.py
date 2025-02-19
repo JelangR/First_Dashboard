@@ -96,12 +96,17 @@ fig, ax = plt.subplots(figsize=(16, 8))
 ax.plot(
     day_df["dteday"],
     day_df["cnt"],
-    marker='o', 
+    marker='',
+    linestyle='-',  
     linewidth=2,
     color="#90CAF9"
 )
-ax.tick_params(axis='y', labelsize=20)
-ax.tick_params(axis='x', labelsize=15)
+ax.set_title("Tren Penyewaan Sepeda Harian", fontsize=22)
+ax.set_xlabel("Tanggal", fontsize=18)
+ax.set_ylabel("Jumlah Penyewaan", fontsize=18)
+ax.tick_params(axis='y', labelsize=15)
+ax.tick_params(axis='x', labelsize=12, rotation=45)  
+ax.grid(True, linestyle="--", alpha=0.7)
  
 st.pyplot(fig)
 #--- membuat bar chart berdasarkan "seeson"
