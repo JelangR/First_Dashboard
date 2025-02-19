@@ -41,7 +41,7 @@ day_df.sort_values(by="dteday", inplace=True)
 day_df.reset_index(inplace=True)
  
 for column in datetime_columns:
-    all_df[column] = pd.to_datetime(all_df[column])
+    day_df[column] = pd.to_datetime(day_df[column])
 	
 min_date = day_df["dteday"].min()
 max_date = day_df["dteday"].max()
