@@ -24,7 +24,7 @@ def buat_rental_jam(df):#--- Fungsi untuk membuat list berdasarkan "hr"
     return rental_jam
 
 def create_daily_orders_df(df):
-    daily_orders_df = df.resample(rule='D', on='order_date').agg({
+    daily_orders_df = df.resample(rule='D', on='dteday').agg({
         "mnth": "nunique",
         "cnt": "sum"
     })
