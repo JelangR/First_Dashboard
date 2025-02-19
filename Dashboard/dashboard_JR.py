@@ -5,6 +5,7 @@ import seaborn as sns
 import streamlit as st
 from babel.numbers import format_currency
 from sklearn.linear_model import LinearRegression
+
 sns.set(style='dark')
 
 #--- Inisiasi fungsi yang akan digunakan
@@ -23,8 +24,8 @@ def buat_rental_jam(df):#--- Fungsi untuk membuat list berdasarkan "hr"
     return rental_jam
 
 #--- Memanggil data
-day_df=pd.read_csv("Dashboard/day_data.csv")
-hour_df=pd.read_csv("Dashboard/hour_data.csv")
+day_df=pd.read_csv("Dashboard\day_data.csv")
+hour_df=pd.read_csv("Dashboard\hour_data.csv")
 
 #--- Memanggil fungsi
 season_favorite=buat_rental_musim(day_df)
@@ -101,11 +102,11 @@ st.write(
     """
 )
 
-st.subheader("Customer's favorite and hate hour	:smile::triumph:")
+st.subheader("Customer's favorite  hour	:smile::triumph:")
 
 #--- membuat bar chart berdasarkan "hr"
 fig, ax=plt.subplots(figsize=(20,10))
-colors_ = ["#D3D3D3",  "#D3D3D3", "#D3D3D3","#D3D3D3",  "#D91656", "#D3D3D3",
+colors_ = ["#D3D3D3",  "#D3D3D3", "#D3D3D3","#D3D3D3",  "#D3D3D3", "#D3D3D3",
            "#D3D3D3", "#D3D3D3", "#D3D3D3","#D3D3D3",  "#D3D3D3", "#D3D3D3",
            "#D3D3D3", "#D3D3D3", "#D3D3D3","#D3D3D3",  "#D3D3D3", "#72BCD4",
            "#D3D3D3","#D3D3D3"
