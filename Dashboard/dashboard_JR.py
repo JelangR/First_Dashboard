@@ -102,12 +102,13 @@ with col3:
     casual_rent=day_df['casual'].sum()
     st.metric("Non Member Rental", value=casual_rent)
 
-st.subheader("Customer's favorite season	:sunny:	:cloud:")
+#--- Jumlah penyewa setiap hari
+st.subheader("Daily Rent	:sunny:")
 #--- membuat tabel jumlah penyewa (perbulan) menurut tanggal
 fig, ax = plt.subplots(figsize=(16, 8))
 ax.plot(
     daily_orders_df["dteday"],
-    daily_orders_df["total"],
+    daily_orders_df["bulan"],
     marker='o', 
     linewidth=2,
     color="#90CAF9"
@@ -116,6 +117,9 @@ ax.tick_params(axis='y', labelsize=20)
 ax.tick_params(axis='x', labelsize=15)
  
 st.pyplot(fig)
+#--- Customer's favorite season
+st.subheader("Customer's favorite season	:sunny:	:cloud:")
+
 #--- membuat bar chart berdasarkan "seeson"
 fig, ax=plt.subplots(figsize=(20,10))
 
