@@ -171,12 +171,13 @@ ax.set_xlabel(None)
 ax.tick_params(axis='x', labelsize=12)
 st.pyplot(fig)
 
+#--- Grafik efek cuaca dengan jumlah penyewa sepeda
 st.subheader("The Effect of Weather on the Number of Bicycle Rentals")
 rent = hour_df.groupby(by="weathersit").agg({
     "cnt": "sum"
 }).reset_index()
 
-# --- Membuat Scatter Plot dan Garis Regresi
+# --- Membuat Scatter Plot dan Garis Regresi ---
 fig, ax = plt.subplots(figsize=(12, 6))
 
 sns.scatterplot(data=rent, x="weathersit", y="cnt", ax=ax, s=100, color="#90CAF9")
@@ -186,12 +187,18 @@ model = LinearRegression()
 model.fit(rent[["weathersit"]], rent["cnt"])
 r2_score = model.score(rent[["weathersit"]], rent["cnt"])
 
-ax.set_title("The Effect of Weather on the Number of Bicycle Rentals", fontsize=16)
+ax.set_title("Pengaruh Cuaca terhadap Jumlah Penyewaan Sepeda", fontsize=16)
 ax.set_xlabel("Kategori Cuaca (weathersit)", fontsize=14)
 ax.set_ylabel("Total Penyewaan Sepeda (cnt)", fontsize=14)
 ax.grid(True, linestyle="--", alpha=0.6)
+st.pyplot(fig)
 
-# --- Menampilkan Nilai R-squared
-plt.figtext(0.15, 0.8, f"R² Score = {r2_score:.4f} (Kekuatan Hubungan: {'Kuat' if r2_score > 0.7 else 'Lemah'})", 
-            fontsize=12, color="black", weight="bold")
-plt.show()
+# --- Menampilkan Nilai Regresi ---
+st.metric(label="R² Score (Kekuatan Hubungan)", value=f"{r2_score:.4f}")
+if r2_score > 0.7:
+    st.success("🔍 Cuaca memiliki pengaruh yang kuat terhadap jumlah penyewaan sepeda!")
+elif r2_score > 0.4:
+    st.warning("⚠️ Cuaca memiliki pengaruh sedang terhadap jumlah penyewaan sepeda.")
+else:
+    st.error("❌ Cuaca memiliki pengaruh lemah terhadap jumlah penyewaan sepeda.")
+
