@@ -55,7 +55,17 @@ with st.sidebar:
     )
 
 col1,col2,col3=st.columns(3)#--- Membuat 3 kolom
-
+#--- Membuat Filter
+min_date = day_df["dteday"].min()
+max_date = day_df["dteday"].max()
+ 
+with st.sidebar:
+    # Mengambil start_date & end_date dari date_input
+    start_date, end_date = st.date_input(
+        label='Rentang Waktu',min_value=min_date,
+        max_value=max_date,
+        value=[min_date, max_date]
+    )
 #--- kolom jumlah rental
 with col1:
     total_rent=day_df['cnt'].sum()
