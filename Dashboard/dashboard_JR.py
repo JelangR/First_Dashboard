@@ -171,19 +171,27 @@ ax.set_xlabel(None)
 ax.tick_params(axis='x', labelsize=12)
 st.pyplot(fig)
 
-st.subheader("The relationship between weather and the number of bicycle renters")
-fig, ax=plt.subplots(figsize=(20,10))
+st.subheader("The Effect of Weather on the Number of Bicycle Rentals")
 rent = hour_df.groupby(by="weathersit").agg({
-    "instant": "nunique",
     "cnt": "sum"
-}).sort_values(by="cnt", ascending=False)
+}).reset_index()
 
-sns.scatterplot(data=rent, x="instant", y="cnt")
-sns.regplot(data=rent, x="instant", y="cnt")
+# --- Membuat Scatter Plot dan Garis Regresi
+fig, ax = plt.subplots(figsize=(12, 6))
 
-Nilai = LinearRegression()
-Nilai.fit(rent[["instant"]], rent["cnt"])
-r2_score = Nilai.score(rent[["instant"]], rent["cnt"])
-st.pyplot(fig)
+sns.scatterplot(data=rent, x="weathersit", y="cnt", ax=ax, s=100, color="#90CAF9")
+sns.regplot(data=rent, x="weathersit", y="cnt", ax=ax, scatter=False, color='red')
 
-st.write("Regression Value = 0.9952780392150941  (excellent regression model)")
+model = LinearRegression()
+model.fit(rent[["weathersit"]], rent["cnt"])
+r2_score = model.score(rent[["weathersit"]], rent["cnt"])
+
+ax.set_title("The Effect of Weather on the Number of Bicycle Rentals", fontsize=16)
+ax.set_xlabel("Kategori Cuaca (weathersit)", fontsize=14)
+ax.set_ylabel("Total Penyewaan Sepeda (cnt)", fontsize=14)
+ax.grid(True, linestyle="--", alpha=0.6)
+
+# --- Menampilkan Nilai R-squared
+plt.figtext(0.15, 0.8, f"R² Score = {r2_score:.4f} (Kekuatan Hubungan: {'Kuat' if r2_score > 0.7 else 'Lemah'})", 
+            fontsize=12, color="black", weight="bold")
+plt.show()
