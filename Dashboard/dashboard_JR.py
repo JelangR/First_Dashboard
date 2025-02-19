@@ -33,6 +33,7 @@ def create_daily_orders_df(df):
         "mnth": "bulan",
         "cnt": "total"
     }, inplace=True)
+	return daily_orders_df
 #--- Memanggil data
 day_df=pd.read_csv("Dashboard/day_data.csv")
 hour_df=pd.read_csv("Dashboard/hour_data.csv")
