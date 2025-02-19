@@ -171,7 +171,7 @@ ax.set_xlabel(None)
 ax.tick_params(axis='x', labelsize=12)
 st.pyplot(fig)
 
-st.subheader("Relationship between weather and number of bike renters")
+st.subheader("The relationship between weather and the number of bicycle renters")
 fig, ax=plt.subplots(figsize=(20,10))
 rent = hour_df.groupby(by="weathersit").agg({
     "instant": "nunique",
